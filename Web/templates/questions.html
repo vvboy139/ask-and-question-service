@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AskHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&displa  y=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            {% if 'username' in session %}
+                <li><a href="{{ url_for('ask') }}">Ask a Question</a></li>
+                <li><a href="{{ url_for('questions') }}">Questions</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('ask') }}">Ask a Question</a></li>
+                <li><a href="{{ url_for('questions') }}">Questions</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('signin') }}">Sign In</a></li>
+            {% endif %}
+        </ul>
+    </nav>    
+    <div class="questions-container">
+        <h2>Questions for {{ user_id }}</h2>
+        <ul>
+            {% for question in questions %}
+                <li>
+                    {{ question[0] }}
+                    <form action="/submit_answer" method="post" style="display: inline;">
+                        <input type="hidden" name="question_id" value="{{ question[0] }}">
+                        <input type="text" name="answer" placeholder="Enter your answer" required>
+                        <button type="submit">Submit Answer</button>
+                    </form>
+                    <form action="/delete_question" method="post" style="display: inline;">
+                        <input type="hidden" name="question_id" value="{{ question[0] }}">
+                        <button type="submit">Delete Question</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <footer>
+        <p>&copy; AskHub</p>
+    </footer>
+</body>
+</html>

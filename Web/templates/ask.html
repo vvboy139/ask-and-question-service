@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ask a Question</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            {% if 'username' in session %}
+                <li><a href="{{ url_for('ask') }}">Ask a Question</a></li>
+                <li><a href="{{ url_for('questions') }}">Questions</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('ask') }}">Ask a Question</a></li>
+                <li><a href="{{ url_for('questions') }}">Questions</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('signin') }}">Sign In</a></li>
+            {% endif %}
+        </ul>
+    </nav>    
+    {% if 'username' in session %}
+        <div class="parent">
+            <div class="ask-container">
+                <h2>Ask a Question</h2>
+                <form action="/submit_question" method="POST">
+                    <input type="text" name="receiverID"placeholder="Reiver's ID">
+                    <label for="question">Your Question:</label>
+                    <textarea id="question" name="question" required></textarea>
+                    <button type="submit">SEND</button>
+                </form>
+            </div>            
+        </div>
+
+    {% endif %}
+    <footer>
+        <p>&copy; AskHub</p>
+    </footer>
+</body>
+</html>

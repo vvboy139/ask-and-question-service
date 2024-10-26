@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AskHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            {% if 'username' in session %}
+                <li><a href="{{ url_for('ask') }}">Ask a Question</a></li>
+                <li><a href="{{ url_for('questions') }}">Questions</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('ask') }}">Ask a Question</a></li>
+                <li><a href="{{ url_for('questions') }}">Questions</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('signin') }}">Sign In</a></li>
+            {% endif %}
+        </ul>
+    </nav>    
+    <div class="signin-container">
+        <h2>SignIn</h2>
+        <form action="/signin" method="POST">
+            <label for="username">Username:</label>
+            <input type="text" id="Sign-username" name="username" required>
+            {% if error %}
+            <p style="color:red;">{{ error }}</p>
+            {% endif %}
+            <label for="name">Name:</label>
+            <input type="text" id="Sign-name" name="name" required>
+            <label for="password">Password:</label>
+            <input type="password" id="Sign-password" name="password" required>
+            <button type="submit">SignIn</button>
+        </form>
+    </div>
+    <footer>
+        <p>&copy; AskHub</p>
+    </footer>
+</body>
+</html>

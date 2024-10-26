@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AskHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">   
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            {% if 'username' in session %}
+                <li><a href="{{ url_for('ask') }}">Ask a Question</a></li>
+                <li><a href="{{ url_for('questions') }}">Questions</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('ask') }}">Ask a Question</a></li>
+                <li><a href="{{ url_for('questions') }}">Questions</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('signin') }}">Sign In</a></li>
+            {% endif %}
+        </ul>
+    </nav>    
+    <div class="login-container">
+        <h2>Login</h2>
+        <form action="/login" method="POST">
+            <label for="username">Username:</label>
+            <input type="text" id="login-username" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="login-password" name="password" required>
+            {% if error %}
+            <p style="color:red;">{{ error }}</p>
+            {% endif %}
+            <button type="submit">Login</button>
+            <li><a href="signin">Don't have an account?</a></li>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy AskHub</p>
+    </footer>
+</body>
+</html>
